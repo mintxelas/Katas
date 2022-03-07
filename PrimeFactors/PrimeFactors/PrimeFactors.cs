@@ -36,11 +36,6 @@ public class PrimeFactors
         throw new ArgumentOutOfRangeException(nameof(number), "number too big for me.");
     }
 
-    private static bool IsPrime(int number)
-    {
-        return primes.Contains(number);
-    }
-
     private int[] Concatenate(int start, int[] rest)
     {
         var l = new List<int> { start };
