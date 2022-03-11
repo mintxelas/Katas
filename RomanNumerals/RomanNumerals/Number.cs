@@ -1,37 +1,23 @@
-﻿using System.Reflection.Metadata;
-
-namespace RomanNumerals;
+﻿namespace RomanNumerals;
 
 public class Number
 {
 
-    private static readonly string[] Symbols =
-    {
-        string.Empty,
-        @"I" , 
-        @"II" , 
-        @"III", 
-        @"IV", 
-        @"V", 
-        @"IX",
-        @"X", 
-        @"XL",
-        @"L",
-        @"XC",
-        @"C",
-        @"CD"
-    };
-    
-    private static readonly (int, int)[] Values =
-    {
-        (400, 12), 
-        (100, 11), 
-        (90, 10), 
-        (50, 9), 
-        (40, 8), 
-        (10, 7), 
-        (9, 6), 
-        (5, 5)
+    private static readonly (int, string)[] Symbols =
+        {
+        (400, @"CD"),
+        (100, @"C"),
+        (90, @"XC"),
+        (50, @"L"),
+        (40, @"XL"),
+        (10, @"X"),
+        (9, @"IX"),
+        (5, @"V"),
+        (4, @"IV"),
+        (3, @"III"),
+        (2, @"II"),
+        (1, @"I"),
+        (0, string.Empty),
     };
 
     private readonly int arabic;
@@ -43,11 +29,14 @@ public class Number
 
     public string ToRoman()
     {
-        foreach (var (limit, index) in Values)
+        foreach (var (limit, symbol) in Symbols)
         {
-            if (arabic >= limit)
-                return Symbols[index] + new Number(arabic - limit).ToRoman();
+            if (arabic > 5 && arabic >= limit)
+            {
+                return symbol + new Number(arabic - limit).ToRoman();
+            }
         }
-        return Symbols[arabic];
+        var (_, sym) = Symbols[Symbols.Length - arabic - 1];
+        return sym;
     }
 }
